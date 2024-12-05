@@ -67,7 +67,6 @@ class _TimeInputDialogState extends State<TimerInputDialog> {
     final seconds = int.tryParse(_secondsController.text) ?? 0;
     context.read<MyAppState>().setTime(minutes, seconds, hours);
     Navigator.pop(context);
-    dispose();
   }
 
   @override
@@ -107,7 +106,6 @@ class _TimeInputDialogState extends State<TimerInputDialog> {
         TextButton(
           onPressed: () {
             Navigator.pop(context);
-            dispose();
           },
           child: const Text('取消'),
         ),
@@ -233,7 +231,6 @@ class _TimePickerDialogState extends State<TimerPickerDialog> {
         TextButton(
           onPressed: () {
             Navigator.pop(context);
-            dispose();
           },
           child: const Text('取消'),
         ),
@@ -243,7 +240,6 @@ class _TimePickerDialogState extends State<TimerPickerDialog> {
                 .read<MyAppState>()
                 .setTime(selectedMinutes, selectedSeconds, selectedHours);
             Navigator.pop(context);
-            dispose();
           },
           child: const Text('确定'),
         ),
@@ -363,13 +359,16 @@ class _TimeCardState extends State<TimeCard>
       builder: (context, child) => ScaleTransition(
         scale: _scale,
         child: Card(
-          shape: const RoundedRectangleBorder(
+          shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(32)),
+            side: BorderSide(
+              color: theme.colorScheme.onPrimary.withOpacity(0.4),
+              width: widget.enabled ? 0 : 5,
+              strokeAlign: BorderSide.strokeAlignInside,
+            ),
           ),
           elevation: _elevation.value,
-          color: widget.enabled
-              ? theme.colorScheme.primary
-              : theme.colorScheme.primary.withOpacity(0.5),
+          color: theme.colorScheme.primary,
           child: Material(
             color: Colors.transparent,
             child: InkWell(

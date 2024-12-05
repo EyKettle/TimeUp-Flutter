@@ -34,6 +34,7 @@ class _TimerHistoryListState extends State<TimerHistoryList> {
       builder: (context) => AlertDialog(
         title: const Text('编辑活动名称'),
         content: TextField(
+          key: ValueKey('textField$recordId'),
           controller: controller,
           decoration: const InputDecoration(labelText: '活动名称'),
           focusNode: focusNode,
@@ -49,10 +50,11 @@ class _TimerHistoryListState extends State<TimerHistoryList> {
           ),
           TextButton(
             onPressed: () async {
-              Navigator.pop(context);
-              await widget.onNameEvent(recordId, controller.text);
+              final text = controller.text;
               controller.dispose();
               focusNode.dispose();
+              Navigator.pop(context);
+              await widget.onNameEvent(recordId, text);
               setState(() {});
             },
             child: const Text('确定'),
